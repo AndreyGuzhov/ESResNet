@@ -1,0 +1,94 @@
+{
+  "Visdom": {
+    "host": null,
+    "port": null,
+    "env_path": null
+  },
+  "Setup": {
+    "name": "LMC",
+    "suffix": "CV1",
+    "batch_train": 32,
+    "batch_test": 32,
+    "workers_train": 0,
+    "workers_test": 0,
+    "epochs": 300,
+    "log_interval": 10,
+    "saved_models_path": null
+  },
+  "Model": {
+    "class": "reproduced.lmcnet.LMCNet",
+    "args": {
+      "num_channels": 1,
+      "num_classes": 10,
+      "sample_rate": 22050,
+      "norm": "inf",
+      "n_fft": 8192,
+      "hop_length": 2205,
+      "win_length": 4410,
+      "window": "hann",
+      "n_mels": 60,
+      "tuning": 0.0,
+      "n_chroma": 7,
+      "ctroct": 5.0,
+      "octwidth": 2.0,
+      "base_c": true,
+      "freq": null,
+      "fmin": 10.0,
+      "fmax": null,
+      "n_bands": 11,
+      "quantile": 0.02,
+      "linear": false
+    }
+  },
+  "Optimizer": {
+    "class": "torch.optim.Adam",
+    "args": {
+      "lr": 1e-3,
+      "betas": [0.9, 0.999],
+      "eps": 1e-8,
+      "weight_decay": 1e-3
+    }
+  },
+  "Dataset": {
+    "class": "utils.datasets.UrbanSound8K",
+    "args": {
+      "root": "/path/to/UrbanSound8K",
+      "sample_rate": 22050,
+      "fold": 1,
+      "random_split_seed": null,
+      "mono": true,
+      "training": {"key": "train", "yes": true, "no": false}
+    }
+  },
+  "Transforms": [
+    {
+      "class": "utils.transforms.ToTensor1D",
+      "args": {}
+    },
+    {
+      "class": "utils.transforms.RandomPadding",
+      "args": {"out_len": 88200, "train": false}
+    },
+    {
+      "class": "utils.transforms.RandomCrop",
+      "args": {"out_len": 88200, "train": false}
+    }
+  ],
+  "Metrics": {
+    "Performance": {
+      "window_name": null,
+      "x_label": "#Epochs",
+      "y_label": "Accuracy",
+      "width": 1890,
+      "height": 416,
+      "lines": [
+        {
+          "line_label": "Val. Acc.",
+          "class": "ignite.metrics.Accuracy",
+          "args": {},
+          "is_checkpoint": true
+        }
+      ]
+    }
+  }
+}
