@@ -3,7 +3,7 @@ numpy==1.18.1
 pandas==1.0.3
 pytorch-ignite==0.3.0
 scikit-learn==0.22.1
-scipy==1.4.1
+scipy==1.10.0
 termcolor==1.1.0
 torch==1.4.0
 torchvision==0.5.0
